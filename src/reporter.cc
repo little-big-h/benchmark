@@ -90,6 +90,14 @@ std::string BenchmarkReporter::Run::benchmark_name() const {
   return name;
 }
 
+std::string BenchmarkReporter::Run::benchmark_function_name() const {
+  std::string name = run_name.function_name;
+  if (run_type == RT_Aggregate) {
+    name += "_" + aggregate_name;
+  }
+  return name;
+}
+
 double BenchmarkReporter::Run::GetAdjustedRealTime() const {
   double new_time = real_accumulated_time * GetTimeUnitMultiplier(time_unit);
   if (iterations != 0) new_time /= static_cast<double>(iterations);

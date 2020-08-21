@@ -1381,6 +1381,7 @@ class BenchmarkReporter {
           max_bytes_used(0) {}
 
     std::string benchmark_name() const;
+    std::string benchmark_function_name() const;
     BenchmarkName run_name;
     RunType run_type;
     std::string aggregate_name;

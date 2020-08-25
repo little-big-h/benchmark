@@ -20,14 +20,14 @@ TEST(BenchmarkNameTest, FunctionName) {
 TEST(BenchmarkNameTest, FunctionNameAndArgs) {
   auto name = BenchmarkName();
   name.function_name = "function_name";
-  name.args = "some_args:3/4/5";
+  name.args = {{"some_args", 3}, {"", 4}, {"", 5}};
   EXPECT_EQ(name.str(), "function_name/some_args:3/4/5");
 }
 
 TEST(BenchmarkNameTest, MinTime) {
   auto name = BenchmarkName();
   name.function_name = "function_name";
-  name.args = "some_args:3/4";
+  name.args = {{"some_args", 3}, {"", 4}};
   name.min_time = "min_time:3.4s";
   EXPECT_EQ(name.str(), "function_name/some_args:3/4/min_time:3.4s");
 }
@@ -66,7 +66,7 @@ TEST(BenchmarkNameTest, Threads) {
 
 TEST(BenchmarkNameTest, TestEmptyFunctionName) {
   auto name = BenchmarkName();
-  name.args = "first:3/second:4";
+  name.args = {{"first", 3}, {"second", 4}};
   name.threads = "threads:22";
   EXPECT_EQ(name.str(), "first:3/second:4/threads:22");
 }

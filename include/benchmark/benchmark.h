@@ -1329,7 +1329,7 @@ struct SystemInfo {
 // building the final name using 'str()'.
 struct BenchmarkName {
   std::string function_name;
-  std::string args;
+  std::vector<std::pair<std::string, long> > args;
   std::string min_time;
   std::string iterations;
   std::string repetitions;
@@ -1382,6 +1382,7 @@ class BenchmarkReporter {
 
     std::string benchmark_name() const;
     std::string benchmark_function_name() const;
+    std::vector<std::pair<std::string, long> > const & benchmark_arguments() const;
     BenchmarkName run_name;
     RunType run_type;
     std::string aggregate_name;

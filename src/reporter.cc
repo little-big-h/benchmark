@@ -98,6 +98,10 @@ std::string BenchmarkReporter::Run::benchmark_function_name() const {
   return name;
 }
 
+std::vector<std::pair<std::string, long> > const & BenchmarkReporter::Run::benchmark_arguments() const{
+  return run_name.args;
+};
+
 double BenchmarkReporter::Run::GetAdjustedRealTime() const {
   double new_time = real_accumulated_time * GetTimeUnitMultiplier(time_unit);
   if (iterations != 0) new_time /= static_cast<double>(iterations);

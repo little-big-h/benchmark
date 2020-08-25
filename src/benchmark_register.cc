@@ -178,18 +178,17 @@ bool BenchmarkFamilies::FindBenchmarks(
         // Add arguments to instance name
         size_t arg_i = 0;
         for (auto const& arg : args) {
-          if (!instance.name.args.empty()) {
-            instance.name.args += '/';
-          }
+          instance.name.args.emplace_back();
+          auto& argument = instance.name.args.back();
 
           if (arg_i < family->arg_names_.size()) {
             const auto& arg_name = family->arg_names_[arg_i];
             if (!arg_name.empty()) {
-              instance.name.args += StrFormat("%s:", arg_name.c_str());
+              std::get<0>(argument) = StrFormat("%s:", arg_name.c_str());
             }
           }
 
-          instance.name.args += StrFormat("%" PRId64, arg);
+          std::get<1>(argument) = arg;
           ++arg_i;
         }
 

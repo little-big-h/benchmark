@@ -52,7 +52,13 @@ std::string join(char delimiter, const Ts&... ts) {
 }  // namespace
 
 std::string BenchmarkName::str() const {
-  return join('/', function_name, args, min_time, iterations, repetitions,
-              time_type, threads);
+  auto argString = std::string{};
+  for(auto argIt = args.begin(); argIt != args.end(); ++argIt) {
+    if(argIt != args.begin())
+      argString += "/";
+    argString += (std::get<0>(*argIt).length() > 0 ? (std::get<0>(*argIt) + ":") : "");
+    argString += std::to_string(std::get<1>(*argIt));
+  }
+  return join('/', function_name, argString, min_time, iterations, repetitions, time_type, threads);
 }
 }  // namespace benchmark

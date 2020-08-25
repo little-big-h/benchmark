@@ -198,6 +198,24 @@ void JSONReporter::PrintRunData(Run const& run) {
   std::ostream& out = GetOutputStream();
   out << indent << FormatKV("name", run.benchmark_name()) << ",\n";
   out << indent << FormatKV("function_name", run.benchmark_function_name()) << ",\n";
+  auto& arguments = run.benchmark_arguments();
+  if(arguments.size() > 0) {
+    out << indent << "\"arguments\": [\n";
+    for (auto argumentIt = arguments.begin(); argumentIt != arguments.end(); ++argumentIt) {
+      auto& argument = *argumentIt;
+      if(std::get<0>(argument).length() > 0) {
+        out << indent << "  {"
+            << FormatKV(std::get<0>(argument), (int64_t)std::get<1>(argument))
+            << "}";
+      } else {
+        out << indent << "  " << (int64_t)std::get<1>(argument);
+      }
+      if(next(argumentIt) != arguments.end())
+        out << ",";
+      out << "\n";
+    }
+    out << indent << "],\n";
+  }
   out << indent << FormatKV("run_name", run.run_name.str()) << ",\n";
   out << indent << FormatKV("run_type", [&run]() -> const char* {
     switch (run.run_type) {
